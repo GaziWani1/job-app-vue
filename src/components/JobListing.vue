@@ -1,5 +1,5 @@
 <script setup>
-import { ref , computed } from 'vue';
+import { ref, computed } from 'vue';
 
 const props = defineProps({
     job: {
@@ -9,13 +9,19 @@ const props = defineProps({
 
 const showFullDescription = ref(false);
 
-const truncateDescription = computed(()=> {
+const toggleFullDescription = () => {
+  showFullDescription.value = !showFullDescription.value;
+};
+
+const truncateDescription = computed(() => {
     let description = props.job.description;
-    if(!showFullDescription.value) {
-         description = description.substring(0 , 90) + '...'
+    if (!showFullDescription.value) {
+        description = description.substring(0, 90) + '...'
     }
     return description
 })
+
+
 
 </script>
 
@@ -30,9 +36,14 @@ const truncateDescription = computed(()=> {
             </div>
 
             <div class="mb-5">
-                {{
-                 truncateDescription
-                }}
+                <div>
+                    {{
+                        truncateDescription
+                    }}
+                </div>
+                <button @click="toggleFullDescription" class=" text-sm text-green-500 hover:text-green-600 mb-5">
+                    {{ showFullDescription ? 'Less' : 'More' }}
+                </button>
             </div>
 
             <h3 class="text-green-500 mb-2">{{ job.salary }} / Year</h3>
@@ -41,7 +52,7 @@ const truncateDescription = computed(()=> {
 
             <div class="flex flex-col lg:flex-row justify-between mb-4">
                 <div class="text-orange-700 mb-3">
-                    <i class="fa-solid fa-location-dot text-lg"></i>
+                    <i class="pi pi-map-marker text-orange-700"></i>
                     {{ job.location }}
                 </div>
                 <a :href="`/job/${job.id}`"
