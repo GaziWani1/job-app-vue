@@ -3,8 +3,6 @@ import { RouterLink, useRoute } from 'vue-router';
 
 const isActiveLink = (routePath) => {
   const route = useRoute();
-  console.log(route.path);
-  
   return route.path === routePath;
 }
   
