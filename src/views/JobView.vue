@@ -5,6 +5,7 @@ import { useRoute, RouterLink } from 'vue-router';
 
 import axios from 'axios';
 import BackButton from '../components/BackButton.vue';
+import router from '../router';
 
 const route = useRoute();
 const jobId = route.params.id;
@@ -25,6 +26,16 @@ onMounted(async () => {
     state.isLoading = false
   }
 })
+
+const deleteJob = async () => {
+  try {
+    await axios.delete(`/api/jobs/${jobId}`);
+    router.push('/')
+  } catch (error) {
+    console.log('Error deleting job ' , error)
+  }
+  
+}
 
 </script>
 
@@ -91,6 +102,7 @@ onMounted(async () => {
               class="bg-green-500 hover:bg-green-600 text-white text-center font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block">Edit
               Job</RouterLink>
             <button
+              @click="deleteJob"
               class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block">
               Delete Job
             </button>
